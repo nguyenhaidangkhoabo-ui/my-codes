@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Quản lý Thông tin Cá nhân</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 40px; }
+    h1 { color: #333; }
+    form, .filters { margin-bottom: 20px; }
+    input, select, button { padding: 6px; margin: 4px; }
+    table { border-collapse: collapse; width: 100%; }
+    th, td { border: 1px solid #ccc; padding: 8px; text-align: left; }
+    .error { color: red; }
+  </style>
+</head>
+<body>
+  <h1>Quản lý Thông tin Cá nhân</h1>
+
+  <form id="profile-form">
+    <h3>Thêm mới</h3>
+    <input type="text" id="fullName" placeholder="Họ tên" required />
+    <input type="number" id="birthYear" placeholder="Năm sinh" required />
+    <select id="gender" required>
+      <option value="">Giới tính</option>
+      <option value="male">Nam</option>
+      <option value="female">Nữ</option>
+      <option value="other">Khác</option>
+    </select>
+    <input type="email" id="email" placeholder="Email" required />
+    <input type="tel" id="phone" placeholder="SĐT" required />
+    <button type="submit">Thêm</button>
+  </form>
+
+  <div class="filters">
+    <input type="text" id="search" placeholder="Tìm theo tên" />
+    <select id="gender-filter">
+      <option value="">Tất cả giới tính</option>
+      <option value="male">Nam</option>
+      <option value="female">Nữ</option>
+      <option value="other">Khác</option>
+    </select>
+    <select id="sort">
+      <option value="">Sắp xếp</option>
+      <option value="asc">Năm sinh tăng dần</option>
+      <option value="desc">Năm sinh giảm dần</option>
+    </select>
+  </div>
+
+  <p id="message" class="error"></p>
+
+  <table>
+    <thead>
+      <tr>
+        <th>ID</th><th>Họ tên</th><th>Năm sinh</th><th>Tuổi</th>
+        <th>Giới tính</th><th>Email</th><th>SĐT</th><th></th>
+      </tr>
+    </thead>
+    <tbody id="table-list"></tbody>
+  </table>
+
+  <script src="script.js"></script>
+</body>
+</html>
