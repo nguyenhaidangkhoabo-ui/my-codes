@@ -29,24 +29,28 @@ flowchart TD
     accTitle: Cấu trúc thư mục dự án
     accDescr: Sơ đồ cây thư mục của dự án hvn-khkt-task-002 gồm public và src với các tầng database, services, controllers, routes
 
-    Root["hvn-khkt-task-002"] --> Git[".gitignore"]
-    Root --> Pkg["package.json"]
-    Root --> Public["public/"]
-    Root --> Src["src/"]
+    Root["trueproject<br/>(C:\Users\Admin\Desktop\trueproject)"] --> Git[".gitignore"]
+    Root --> Backend["backend/"]
+    Root --> Frontend["frontend/"]
 
-    Public --> Index["index.html"]
-    Public --> Script["script.js"]
+    Backend --> Pkg["package.json"]
+    Backend --> Src["src/"]
 
     Src --> Server["server.js"]
     Src --> DB["database/"]
     Src --> Services["services/"]
     Src --> Controllers["controllers/"]
     Src --> Routes["routes/"]
+    Src --> Middlewares["middlewares/"]
+
+    Frontend --> Index["index.html"]
+    Frontend --> Script["script.js"]
 
     DB --> ProfileDB["profile.database.js"]
     Services --> ProfileService["profile.service.js"]
     Controllers --> ProfileController["profile.controller.js"]
     Routes --> ProfileRoute["profile.route.js"]
+    Middlewares --> ErrorMiddleware["error.middleware.js"]
 ```
 
 ---

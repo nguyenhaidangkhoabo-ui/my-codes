@@ -21,8 +21,8 @@ Luồng dữ liệu một chiều: `Route → Controller → Service → Databas
 | `src/controllers/` | `profile.controller.js` | Bóc tách `req`, gọi Service, trả `res` đúng status & format. | Tính toán, validate nghiệp vụ, thao tác dữ liệu. |
 | `src/services/` | `profile.service.js` | Business Rules: validate tuổi (1900–nay), check trùng email/phone, lọc, sắp xếp. | Phụ thuộc `req`/`res`. |
 | `src/database/` | `profile.database.js` | CRUD thô trên mảng In-Memory `profiles`. | Check quy tắc nghiệp vụ. |
-| Entry Point | `src/server.js` | Khởi tạo Express, middleware (cors, express.json), serve `public/`, `GET /ping`. | Định tuyến chi tiết. |
-| Frontend | `public/index.html`, `public/script.js` | Giao diện + `fetch()` không reload trang. | — |
+| Entry Point | `src/server.js` | Khởi tạo Express, middleware (cors, express.json), serve `frontend/` (qua `path.join(__dirname, '../../frontend')`), `GET /ping`. | Định tuyến chi tiết. |
+| Frontend | `frontend/index.html`, `frontend/script.js` | Giao diện + `fetch()` không reload trang. | — |
 
 ## 3. API cốt lõi (base: `/profiles`)
 
@@ -52,7 +52,7 @@ Database helper: `findByEmailOrPhone(email, phone, excludeId)` dùng để kiể
 | 1 | Setup Khung & Server Base | `.gitignore`, `package.json`, `src/server.js`, khung thư mục |
 | 2 | Database & Service Layer | `src/database/*`, `src/services/*` |
 | 3 | Controller & Route Layer | `src/controllers/*`, `src/routes/*` |
-| 4 | Frontend & Tích hợp API | `public/index.html`, `public/script.js` |
+| 4 | Frontend & Tích hợp API | `frontend/index.html`, `frontend/script.js` |
 | 5 | Global Error Handling & Refactor | `src/middlewares/error.middleware.js`, hoàn thiện 100% Rubric |
 
 ## 6. Chú ý lập trình

@@ -1,4 +1,4 @@
-const API = ' http://localhost:3000/profiles';
+const API = '/profiles';
 
 const form = document.getElementById('profile-form');
 const searchInput = document.getElementById('search');

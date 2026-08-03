@@ -13,7 +13,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 // Global middleware
-// app.use(cors());
+app.use(cors());
 app.use(express.json());
 
 // Serve frontend (nằm ngoài backend/)

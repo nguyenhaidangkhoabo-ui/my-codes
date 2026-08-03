@@ -7,7 +7,7 @@ I now have everything I need. Here is your complete, detailed implementation pla
 ## Cấu trúc thư mục cuối cùng (theo lựa chọn của bạn)
 
 ```
-D:\BaitapExpress\
+C:\Users\Admin\Desktop\trueproject\
 ├── .gitignore
 ├── backend\
 │   ├── package.json
@@ -29,7 +29,7 @@ D:\BaitapExpress\
 
 ## 🟢 PHASE 1 — Setup Khung & Server Base
 
-### 1.1 `.gitignore` (đặt tại `D:\BaitapExpress\`)
+### 1.1 `.gitignore` (đặt tại `C:\Users\Admin\Desktop\trueproject\`)
 ```gitignore
 node_modules/
 .env
