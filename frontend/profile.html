@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Trang cá nhân</title>
+  <style>
+    body { font-family: Arial, sans-serif; max-width: 500px; margin: 60px auto; }
+    .header { display: flex; justify-content: space-between; align-items: center; }
+    .card { border: 1px solid #ccc; border-radius: 8px; padding: 20px; margin-top: 20px; }
+    .card p { margin: 8px 0; }
+    .error { color: red; }
+    #logout-btn { padding: 8px 16px; cursor: pointer; }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <h1>Trang cá nhân</h1>
+    <button id="logout-btn">Đăng xuất</button>
+  </div>
+
+  <p class="error" id="message"></p>
+
+  <div class="card" id="profile-card" style="display:none">
+    <h2 id="user-name"></h2>
+    <p><strong>Email:</strong> <span id="user-email"></span></p>
+    <p><strong>ID:</strong> <span id="user-id"></span></p>
+    <p><strong>Ngày tham gia:</strong> <span id="user-created"></span></p>
+  </div>
+
+  <script src="auth.js"></script>
+  <script>
+    // GUARD: chưa đăng nhập → bị đá về login.html
+    if (!tokenStorage.get()) {
+      window.location.href = 'login.html';
+    }
+
+    const messageEl = document.getElementById('message');
+    const card = document.getElementById('profile-card');
+
+    // Lấy thông tin user hiện tại thông qua JWT
+    async function loadProfile() {
+      try {
+        const res = await fetch('/api/auth/me', {
+          headers: { Authorization: `Bearer ${tokenStorage.get()}` }
+        });
+        const data = await res.json();
+
+        if (!res.ok) {
+          // Nếu 401 → auth.js chưa xử lý ở fetch trần này, xử lý thủ công:
+          if (res.status === 401) {
+            tokenStorage.clear();
+            window.location.href = 'login.html';
+            return;
+          }
+          messageEl.textContent = data.message || 'Không thể tải thông tin';
+          return;
+        }
+
+        const u = data.data;
+        document.getElementById('user-name').textContent = u.fullName;
+        document.getElementById('user-email').textContent = u.email;
+        document.getElementById('user-id').textContent = u.id;
+        document.getElementById('user-created').textContent =
+          new Date(u.createdAt).toLocaleString('vi-VN');
+        card.style.display = 'block';
+      } catch (err) {
+        messageEl.textContent = 'Lỗi kết nối, vui lòng thử lại';
+      }
+    }
+
+    document.getElementById('logout-btn').addEventListener('click', () => {
+      tokenStorage.clear();
+      window.location.href = 'login.html';
+    });
+
+    loadProfile();
+  </script>
+</body>
+</html>

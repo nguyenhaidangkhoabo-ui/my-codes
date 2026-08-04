@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Đăng ký</title>
+  <style>
+    body { font-family: Arial, sans-serif; max-width: 400px; margin: 60px auto; text-align: center; }
+    form { display: flex; flex-direction: column; gap: 12px; }
+    input, button { padding: 10px; font-size: 16px; }
+    .error { color: red; min-height: 20px; }
+    a { color: #1a73e8; }
+  </style>
+</head>
+<body>
+  <h1>Đăng ký tài khoản</h1>
+
+  <form id="register-form">
+    <input type="text" id="fullName" placeholder="Họ tên" required />
+    <input type="email" id="email" placeholder="Email" required />
+    <input type="password" id="password" placeholder="Mật khẩu (tối thiểu 6 ký tự)" minlength="6" required />
+    <input type="password" id="confirmPassword" placeholder="Xác nhận mật khẩu" required />
+    <button type="submit">Đăng ký</button>
+  </form>
+
+  <p class="error" id="message"></p>
+  <p>Đã có tài khoản? <a href="login.html">Đăng nhập</a></p>
+
+  <script src="auth.js"></script>
+  <script>
+    if (tokenStorage.get()) {
+      window.location.href = 'profile.html';
+    }
+
+    const form = document.getElementById('register-form');
+    const messageEl = document.getElementById('message');
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      messageEl.textContent = '';
+
+      const password = document.getElementById('password').value;
+      const confirmPassword = document.getElementById('confirmPassword').value;
+
+      // Validate client trước khi gửi
+      if (password !== confirmPassword) {
+        messageEl.textContent = 'Xác nhận mật khẩu không khớp';
+        return;
+      }
+
+      const payload = {
+        fullName: document.getElementById('fullName').value.trim(),
+        email: document.getElementById('email').value.trim(),
+        password
+      };
+
+      try {
+        const res = await fetch('/api/auth/register', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+        const data = await res.json();
+
+        if (!res.ok) {
+          messageEl.textContent = data.message || 'Đăng ký thất bại';
+          return;
+        }
+
+        // Auto-login: lưu token rồi vào thẳng trang profile
+        tokenStorage.set(data.data.token);
+        window.location.href = 'profile.html';
+      } catch (err) {
+        messageEl.textContent = 'Lỗi kết nối, vui lòng thử lại';
+      }
+    });
+  </script>
+</body>
+</html>

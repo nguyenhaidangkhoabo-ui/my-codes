@@ -1,8 +1,10 @@
+import 'dotenv/config'; // 🔐 NẠP BIẾN MÔI TRƯỜNG TỪ .env — đặt ngay đầu file
 import express from 'express';
 import cors from 'cors';
 import { fileURLToPath } from 'url';
 import path from 'path';
 import profileRoutes from './routes/profile.route.js';
+import authRoutes from './routes/auth.route.js'; // 🔐 IMPORT ROUTE AUTH
 import errorHandler from './middlewares/error.middleware.js';
 
 const app = express();
@@ -25,7 +27,8 @@ app.get('/ping', (req, res) => {
 });
 
 // Mount routes
-app.use('/profiles', profileRoutes);
+app.use('/profiles', profileRoutes);        // giữ nguyên
+app.use('/api/auth', authRoutes);           // 🔐 MOUNT ROUTE AUTH MỚI
 
 // Global error handler (PHẢI đặt cuối cùng)
 app.use(errorHandler);

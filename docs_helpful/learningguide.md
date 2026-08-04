@@ -12,6 +12,7 @@ Dưới đây là cẩm nang giúp bạn bóc tách và đọc hiểu một file
 
 ## **🗺️ Quy trình 5 bước đọc file JavaScript**
 
+
 ### **Bước 1: Xác định môi trường & Vai trò của file**
 
 Trước khi xem code, hãy nhìn vào **tên file** và **vị trí** của nó:
