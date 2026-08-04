@@ -5,33 +5,177 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Trang cá nhân</title>
   <style>
-    body { font-family: Arial, sans-serif; max-width: 500px; margin: 60px auto; }
-    .header { display: flex; justify-content: space-between; align-items: center; }
-    .card { border: 1px solid #ccc; border-radius: 8px; padding: 20px; margin-top: 20px; }
-    .card p { margin: 8px 0; }
-    .error { color: red; }
-    #logout-btn { padding: 8px 16px; cursor: pointer; }
+    :root {
+      --bg: #f0f4f8;
+      --card: #ffffff;
+      --primary: #2563eb;
+      --primary-hover: #1d4ed8;
+      --danger: #dc2626;
+      --danger-hover: #b91c1c;
+      --text: #1f2937;
+      --muted: #6b7280;
+      --border: #e5e7eb;
+      --radius: 16px;
+      --shadow: 0 8px 30px rgba(0, 0, 0, 0.10);
+    }
+    * { box-sizing: border-box; }
+    body {
+      font-family: 'Segoe UI', system-ui, -apple-system, Arial, sans-serif;
+      margin: 0;
+      min-height: 100vh;
+      background: linear-gradient(160deg, #eef2f7 0%, #dbe4f0 100%);
+      color: var(--text);
+      padding: 40px 16px;
+      display: flex;
+      justify-content: center;
+    }
+    .container {
+      width: 100%;
+      max-width: 560px;
+    }
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 24px;
+    }
+    h1 {
+      font-size: 24px;
+      color: #1e293b;
+      margin: 0;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .btn-danger {
+      padding: 10px 18px;
+      border: none;
+      border-radius: 10px;
+      font-size: 14px;
+      font-weight: 600;
+      font-family: inherit;
+      cursor: pointer;
+      background: var(--danger);
+      color: #fff;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: background 0.2s, box-shadow 0.2s, transform 0.15s;
+    }
+    .btn-danger:hover {
+      background: var(--danger-hover);
+      box-shadow: 0 4px 12px rgba(220, 38, 38, 0.35);
+      transform: translateY(-1px);
+    }
+    .top-bar {
+      display: flex;
+      justify-content: flex-end;
+      margin-bottom: 16px;
+    }
+    .top-bar a { text-decoration: none; }
+    .btn-secondary {
+      padding: 10px 18px;
+      border: none;
+      border-radius: 10px;
+      font-size: 14px;
+      font-weight: 600;
+      font-family: inherit;
+      cursor: pointer;
+      background: #eef2f7;
+      color: #374151;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: background 0.2s, transform 0.15s;
+    }
+    .btn-secondary:hover { background: #e2e8f0; transform: translateY(-1px); }
+    .error {
+      color: #dc2626;
+      font-size: 14px;
+      min-height: 20px;
+      margin: 0 0 16px;
+      font-weight: 500;
+    }
+    .card {
+      background: var(--card);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 32px;
+      text-align: center;
+      border: 1px solid rgba(255,255,255,0.6);
+    }
+    .avatar {
+      width: 84px;
+      height: 84px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #2563eb, #7c3aed);
+      color: #fff;
+      font-size: 38px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 18px;
+      box-shadow: 0 6px 18px rgba(37, 99, 235, 0.3);
+    }
+    .card h2 {
+      margin: 0 0 20px;
+      font-size: 20px;
+      color: #1e293b;
+    }
+    .info-list {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      text-align: left;
+    }
+    .info-list li {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 14px;
+      border-radius: 10px;
+      background: #f8fafc;
+      margin-bottom: 10px;
+      font-size: 14px;
+    }
+    .info-list .label {
+      color: var(--muted);
+      font-weight: 600;
+      white-space: nowrap;
+    }
+    .info-list .value {
+      color: #1e293b;
+      font-weight: 500;
+      word-break: break-all;
+      text-align: right;
+      margin-left: 12px;
+    }
   </style>
 </head>
 <body>
-  <div class="header">
-    <h1>Trang cá nhân</h1>
-    <button id="logout-btn">Đăng xuất</button>
-  </div>
+  <div class="container">
+    <div class="header">
+      <h1>👤 Trang cá nhân</h1>
+      <button id="logout-btn" class="btn-danger">⏻ Đăng xuất</button>
+    </div>
 
-  <p class="error" id="message"></p>
+    <p class="error" id="message"></p>
 
-  <div class="top-bar">
-  <a href="index.html">
-    <button type="button">Truy cập</button>
-  </a>
+    <div class="top-bar">
+      <a href="index.html">
+        <button type="button" class="btn-secondary">📋 Truy cập</button>
+      </a>
+    </div>
 
-
-  <div class="card" id="profile-card" style="display:none">
-    <h2 id="user-name"></h2>
-    <p><strong>Email:</strong> <span id="user-email"></span></p>
-    <p><strong>ID:</strong> <span id="user-id"></span></p>
-    <p><strong>Ngày tham gia:</strong> <span id="user-created"></span></p>
+    <div class="card" id="profile-card" style="display:none">
+      <div class="avatar">👤</div>
+      <h2 id="user-name"></h2>
+      <ul class="info-list">
+        <li><span class="label">📧 Email</span><span class="value" id="user-email"></span></li>
+        <li><span class="label">🆔 ID</span><span class="value" id="user-id"></span></li>
+        <li><span class="label">🗓️ Ngày tham gia</span><span class="value" id="user-created"></span></li>
+      </ul>
+    </div>
   </div>
 
   <script src="auth.js"></script>

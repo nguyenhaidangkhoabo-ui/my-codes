@@ -5,24 +5,138 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Đăng nhập</title>
   <style>
-    body { font-family: Arial, sans-serif; max-width: 400px; margin: 60px auto; text-align: center; }
-    form { display: flex; flex-direction: column; gap: 12px; }
-    input, button { padding: 10px; font-size: 16px; }
-    .error { color: red; min-height: 20px; }
-    a { color: #1a73e8; }
+    :root {
+      --bg: #f0f4f8;
+      --card: #ffffff;
+      --primary: #2563eb;
+      --primary-hover: #1d4ed8;
+      --text: #1f2937;
+      --muted: #6b7280;
+      --border: #e5e7eb;
+      --radius: 16px;
+      --shadow: 0 8px 30px rgba(0, 0, 0, 0.10);
+    }
+    * { box-sizing: border-box; }
+    body {
+      font-family: 'Segoe UI', system-ui, -apple-system, Arial, sans-serif;
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(160deg, #eef2f7 0%, #dbe4f0 100%);
+      color: var(--text);
+      padding: 20px;
+    }
+    .auth-card {
+      background: var(--card);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 40px 36px;
+      width: 100%;
+      max-width: 400px;
+      text-align: center;
+    }
+    h1 {
+      font-size: 24px;
+      color: #1e293b;
+      margin: 0 0 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+    }
+    .subtitle {
+      color: var(--muted);
+      font-size: 14px;
+      margin: 0 0 28px;
+    }
+    form { display: flex; flex-direction: column; gap: 16px; }
+    .input-group {
+      position: relative;
+      text-align: left;
+    }
+    .input-group .input-icon {
+      position: absolute;
+      left: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 16px;
+      pointer-events: none;
+    }
+    input {
+      width: 100%;
+      padding: 13px 14px 13px 42px;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      font-size: 15px;
+      font-family: inherit;
+      background: #fafbfc;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    input:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+      background: #fff;
+    }
+    button {
+      padding: 13px;
+      border: none;
+      border-radius: 10px;
+      font-size: 15px;
+      font-weight: 600;
+      font-family: inherit;
+      cursor: pointer;
+      background: var(--primary);
+      color: #fff;
+      transition: background 0.2s, box-shadow 0.2s, transform 0.15s;
+    }
+    button:hover {
+      background: var(--primary-hover);
+      box-shadow: 0 4px 14px rgba(37, 99, 235, 0.35);
+      transform: translateY(-1px);
+    }
+    .error {
+      color: #dc2626;
+      font-size: 14px;
+      min-height: 20px;
+      margin: 14px 0 0;
+      font-weight: 500;
+    }
+    .switch-text {
+      color: var(--muted);
+      font-size: 14px;
+      margin: 18px 0 0;
+    }
+    .switch-text a {
+      color: var(--primary);
+      font-weight: 600;
+      text-decoration: none;
+    }
+    .switch-text a:hover { text-decoration: underline; }
   </style>
 </head>
 <body>
-  <h1>Đăng nhập</h1>
+  <div class="auth-card">
+    <h1>🔐 Đăng nhập</h1>
+    <p class="subtitle">Chào mừng trở lại! Vui lòng nhập thông tin của bạn.</p>
 
-  <form id="login-form">
-    <input type="email" id="email" placeholder="Email" required />
-    <input type="password" id="password" placeholder="Mật khẩu" required />
-    <button type="submit">Đăng nhập</button>
-  </form>
+    <form id="login-form">
+      <div class="input-group">
+        <span class="input-icon">📧</span>
+        <input type="email" id="email" placeholder="Email" required />
+      </div>
+      <div class="input-group">
+        <span class="input-icon">🔑</span>
+        <input type="password" id="password" placeholder="Mật khẩu" required />
+      </div>
+      <button type="submit">Đăng nhập →</button>
+    </form>
 
-  <p class="error" id="message"></p>
-  <p>Chưa có tài khoản? <a href="register.html">Đăng ký ngay</a></p>
+    <p class="error" id="message"></p>
+    <p class="switch-text">Chưa có tài khoản? <a href="register.html">Đăng ký ngay</a></p>
+  </div>
 
   <script src="auth.js"></script>
   <script>

@@ -5,69 +5,228 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Quản lý Thông tin Cá nhân</title>
   <style>
-    body { font-family: Arial, sans-serif; margin: 40px; }
-    h1 { color: #333; }
-    form, .filters { margin-bottom: 20px; }
-    input, select, button { padding: 6px; margin: 4px; }
-    table { border-collapse: collapse; width: 100%; }
-    th, td { border: 1px solid #ccc; padding: 8px; text-align: left; }
-    .error { color: red; }
+    :root {
+      --bg: #f0f4f8;
+      --card: #ffffff;
+      --primary: #2563eb;
+      --primary-hover: #1d4ed8;
+      --text: #1f2937;
+      --muted: #6b7280;
+      --border: #e5e7eb;
+      --radius: 12px;
+      --shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+    }
+    * { box-sizing: border-box; }
+    body {
+      font-family: 'Segoe UI', system-ui, -apple-system, Arial, sans-serif;
+      margin: 0;
+      padding: 40px 16px;
+      min-height: 100vh;
+      background: linear-gradient(160deg, #eef2f7 0%, #e2e8f0 100%);
+      color: var(--text);
+    }
+    .container { max-width: 1100px; margin: 0 auto; }
+    h1 {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: #1e293b;
+      font-size: 26px;
+      margin: 0 0 24px;
+    }
+    .card {
+      background: var(--card);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 24px;
+      margin-bottom: 20px;
+      border: 1px solid rgba(255,255,255,0.6);
+    }
+    .card h3 {
+      margin: 0 0 16px;
+      font-size: 16px;
+      color: #374151;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .form-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 12px;
+      align-items: end;
+    }
+    label {
+      display: block;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--muted);
+      margin-bottom: 6px;
+      text-transform: uppercase;
+      letter-spacing: 0.4px;
+    }
+    input, select {
+      width: 100%;
+      padding: 11px 12px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      font-size: 14px;
+      font-family: inherit;
+      color: var(--text);
+      background: #fafbfc;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    input:focus, select:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+      background: #fff;
+    }
+    .filters { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; align-items: end; }
+    button {
+      padding: 11px 18px;
+      border: none;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 600;
+      font-family: inherit;
+      cursor: pointer;
+      transition: transform 0.15s, box-shadow 0.15s, background 0.2s;
+    }
+    .btn-primary {
+      background: var(--primary);
+      color: #fff;
+    }
+    .btn-primary:hover { background: var(--primary-hover); box-shadow: 0 4px 12px rgba(37,99,235,0.35); transform: translateY(-1px); }
+    .btn-secondary {
+      background: #eef2f7;
+      color: #374151;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .btn-secondary:hover { background: #e2e8f0; }
+    .error { color: #dc2626; font-size: 14px; min-height: 20px; margin: 0 0 12px; font-weight: 500; }
+    .table-wrap { overflow-x: auto; }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 14px;
+    }
+    thead th {
+      background: #f8fafc;
+      color: #64748b;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      text-align: left;
+      padding: 12px 14px;
+      border-bottom: 2px solid var(--border);
+    }
+    tbody td {
+      padding: 12px 14px;
+      border-bottom: 1px solid #f1f5f9;
+      color: #334155;
+    }
+    tbody tr:hover { background: #f8fafc; }
+    .top-bar {
+      display: flex;
+      justify-content: flex-end;
+      margin-bottom: 4px;
+    }
+    .top-bar a { text-decoration: none; }
+    @media (max-width: 640px) {
+      .form-grid { grid-template-columns: 1fr; }
+      .filters { grid-template-columns: 1fr; }
+    }
   </style>
 </head>
 <body>
-  <h1>Quản lý Thông tin Cá nhân</h1>
+  <div class="container">
+    <h1>📋 Quản lý Thông tin Cá nhân</h1>
 
-  <form id="profile-form">
-    <h3>Thêm mới</h3>
-    <input type="text" id="fullName" placeholder="Họ tên" required />
-    <input type="number" id="birthYear" placeholder="Năm sinh" required />
-    <select id="gender" required>
-      <option value="">Giới tính</option>
-      <option value="male">Nam</option>
-      <option value="female">Nữ</option>
-      <option value="other">Khác</option>
-    </select>
-    <input type="email" id="email" placeholder="Email" required />
-    <input type="tel" id="phone" placeholder="SĐT" required />
-    <button type="submit">Thêm</button>
-  </form>
+    <div class="card">
+      <h3>➕ Thêm mới hồ sơ</h3>
+      <form id="profile-form" class="form-grid">
+        <div>
+          <label for="fullName">Họ tên</label>
+          <input type="text" id="fullName" placeholder="Họ tên" required />
+        </div>
+        <div>
+          <label for="birthYear">Năm sinh</label>
+          <input type="number" id="birthYear" placeholder="Năm sinh" required />
+        </div>
+        <div>
+          <label for="gender">Giới tính</label>
+          <select id="gender" required>
+            <option value="">Giới tính</option>
+            <option value="male">Nam</option>
+            <option value="female">Nữ</option>
+            <option value="other">Khác</option>
+          </select>
+        </div>
+        <div>
+          <label for="email">Email</label>
+          <input type="email" id="email" placeholder="Email" required />
+        </div>
+        <div>
+          <label for="phone">SĐT</label>
+          <input type="tel" id="phone" placeholder="SĐT" required />
+        </div>
+        <div>
+          <button type="submit" class="btn-primary">➕ Thêm</button>
+        </div>
+      </form>
+    </div>
 
-  <div class="filters">
-    <input type="text" id="search" placeholder="Tìm theo tên" />
-    <select id="gender-filter">
-      <option value="">Tất cả giới tính</option>
-      <option value="male">Nam</option>
-      <option value="female">Nữ</option>
-      <option value="other">Khác</option>
-    </select>
-    <select id="sort">
-      <option value="">Sắp xếp</option>
-      <option value="asc">Năm sinh tăng dần</option>
-      <option value="desc">Năm sinh giảm dần</option>
-    </select>
+    <div class="card">
+      <h3>🔎 Bộ lọc &amp; tìm kiếm</h3>
+      <div class="filters">
+        <div>
+          <label for="search">Tìm kiếm</label>
+          <input type="text" id="search" placeholder="Tìm theo tên" />
+        </div>
+        <div>
+          <label for="gender-filter">Giới tính</label>
+          <select id="gender-filter">
+            <option value="">Tất cả giới tính</option>
+            <option value="male">Nam</option>
+            <option value="female">Nữ</option>
+            <option value="other">Khác</option>
+          </select>
+        </div>
+        <div>
+          <label for="sort">Sắp xếp</label>
+          <select id="sort">
+            <option value="">Sắp xếp</option>
+            <option value="asc">Năm sinh tăng dần</option>
+            <option value="desc">Năm sinh giảm dần</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <p id="message" class="error"></p>
+
+    <div class="card table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>ID</th><th>Họ tên</th><th>Năm sinh</th><th>Tuổi</th>
+            <th>Giới tính</th><th>Email</th><th>SĐT</th><th></th>
+          </tr>
+        </thead>
+        <tbody id="table-list"></tbody>
+      </table>
+    </div>
+
+    <div class="top-bar">
+      <a href="profile.html">
+        <button type="button" class="btn-secondary">← Quay lại</button>
+      </a>
+    </div>
   </div>
 
-  <p id="message" class="error"></p>
-
-  <table>
-    <thead>
-      <tr>
-        <th>ID</th><th>Họ tên</th><th>Năm sinh</th><th>Tuổi</th>
-        <th>Giới tính</th><th>Email</th><th>SĐT</th><th></th>
-      </tr>
-    </thead>
-    <tbody id="table-list"></tbody>
-  </table>
-
   <script src="script.js"></script>
-
-<div class="top-bar">
-  <a href="profile.html">
-    <button type="button">Quay lại</button>
-  </a>
-
-
-</div>
-
 </body>
 </html>
